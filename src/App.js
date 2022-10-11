@@ -1,24 +1,39 @@
 import logo from './logo.svg';
-import './App.css';
-
+import './style/App.css';
+import { useState, useEffect } from 'react';
+import LoginPage from './components/LoginPage';
+import Home from './components/Home.js';
 function App() {
+  let [user, setSelectedUser] = useState(null);
+  let [hideComponent, setHideComponent] = useState('');
+  useEffect(() => {
+
+    if (user != null) {
+      setHideComponent('none');
+
+    }
+    else {
+      setHideComponent('');
+    }
+
+  }, [user])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className='App' style={{ display: hideComponent, overflow: "hidden" }} >
+        <LoginPage
+          setSelectedUser={(value) => {
+            setSelectedUser(value)
+          }}>
+
+        </LoginPage>
+
+
+      </div>
+      {user != null && <Home></Home>}
+
+    </>
+
   );
 }
 
